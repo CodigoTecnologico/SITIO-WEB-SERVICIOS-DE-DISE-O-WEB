@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#05050A">
     
     <meta name="description" content="Freelancer front-end con 2 años de experiencia. Landing pages claras, rápidas y efectivas. HTML, CSS, JS y Python. Portafolio de proyectos reales.">
     <meta name="keywords" content="landing page, desarrollo web, freelancer, HTML, CSS, JavaScript, Python, Iván Arce, portafolio, páginas web económicas">
     <meta name="author" content="Iván Arce">
     <meta name="robots" content="index, follow">
+    <!-- ⚠️ Reemplaza tudominio.com por tu dominio real -->
     <link rel="canonical" href="https://tudominio.com/">
     
     <meta property="og:title" content="Iván Arce | Landing pages claras y funcionales">
@@ -31,7 +33,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://formspree.io;">
+    <!-- CSP: se permite https: para imágenes externas y formspree para el formulario -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io;">
     
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -41,25 +44,25 @@
         <div class="cookie-content">
             <p>Utilizamos cookies para mejorar la experiencia. Al continuar navegando aceptas nuestra <a href="privacidad.html">política de privacidad</a>.</p>
             <div class="cookie-buttons">
-                <button id="cookie-accept" class="cookie-btn">Aceptar</button>
-                <button id="cookie-reject" class="cookie-btn secondary">Rechazar</button>
+                <button id="cookie-accept" type="button" class="cookie-btn">Aceptar</button>
+                <button id="cookie-reject" type="button" class="cookie-btn secondary">Rechazar</button>
             </div>
         </div>
     </div>
 
     <!-- Menú móvil fullscreen -->
     <div class="mobile-menu-overlay" id="mobile-menu-overlay">
-        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Cerrar menú">
+        <button class="mobile-menu-close" id="mobile-menu-close" type="button" aria-label="Cerrar menú">
             <i class="fas fa-times"></i>
         </button>
         <div class="mobile-menu-content">
-            <a href="#sobre-mi">Sobre mí</a>
+            <a href="#sobre-mi">Proyecto</a>
             <a href="#work">Trabajos</a>
             <a href="#proceso">Proceso</a>
             <a href="#skills">Skills</a>
+            <a href="#invbas-dental">INVBAS DENTAL</a>
             <a href="#software">Software</a>
             <a href="#software-proceso">Proceso Software</a>
-            <a href="#wordpress">WordPress</a>
             <a href="#contacto" class="mobile-contact-btn">Cotizar <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
@@ -71,16 +74,16 @@
                 <img class="nav-logo" src="assets/image/logo-central.png" alt="Iván Arce - Freelancer" width="100" height="auto">
             </a>
             <div class="nav-links desktop-nav">
-                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#sobre-mi">Proyecto</a>
                 <a href="#work">Trabajos</a>
                 <a href="#proceso">Proceso</a>
                 <a href="#skills">Skills</a>
+                <a href="#invbas-dental">INVBAS DENTAL</a>
                 <a href="#software">Software</a>
                 <a href="#software-proceso">Proceso Software</a>
-                <a href="#wordpress">WordPress</a>
                 <a href="#contacto" class="contact-btn">Cotizar <i class="fas fa-arrow-right"></i></a>
             </div>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+            <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu-overlay">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -90,49 +93,63 @@
     <header class="hero" id="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span class="badge" id="hero-badge">🚀 2 años creando landing pages</span>
-            <h1 id="hero-title">Landing pages <br> <span class="highlight">claras y funcionales.</span></h1>
-            <p id="hero-description">Freelancer front-end con 2 años de experiencia. Me enfoco en lo que sé hacer bien: páginas sencillas, rápidas y que cumplen su objetivo.</p>
+            <h1 id="hero-title">Web y software <br> <span class="highlight">para negocios reales.</span></h1>
+            <p id="hero-description">Landing pages a la medida y software de escritorio en Python listo para instalar. Precios claros, licencias perpetuas y soporte directo.</p>
         </div>
         
         <div class="carousel-indicators" id="carousel-indicators">
-            <button class="indicator active" data-index="0" aria-label="Diapositiva 1"></button>
-            <button class="indicator" data-index="1" aria-label="Diapositiva 2"></button>
-            <button class="indicator" data-index="2" aria-label="Diapositiva 3"></button>
+            <button class="indicator active" data-index="0" type="button" aria-label="Diapositiva 1"></button>
+            <button class="indicator" data-index="1" type="button" aria-label="Diapositiva 2"></button>
+            <button class="indicator" data-index="2" type="button" aria-label="Diapositiva 3"></button>
         </div>
         
-        <button class="carousel-btn prev" id="prev-btn" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
-        <button class="carousel-btn next" id="next-btn" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+        <button class="carousel-btn prev" id="prev-btn" type="button" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn next" id="next-btn" type="button" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
     </header>
 
-    <!-- SOBRE MÍ -->
+    <!-- SOBRE EL PROYECTO -->
     <section id="sobre-mi" class="sobre-mi-section">
         <div class="sobre-mi-container reveal">
-            <div class="sobre-mi-foto">
-                <img src="assets/image/ivan.jpg" alt="Iván Arce - freelancer" loading="lazy" width="400" height="auto">
-                <div class="foto-borde"></div>
-            </div>
+            <!-- Columna izquierda: texto -->
             <div class="sobre-mi-texto">
-                <span class="section-tag">SOBRE MÍ</span>
-                <h2>Un desarrollador <span class="highlight">honesto y directo</span></h2>
+                <div class="sobre-mi-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <span class="section-tag">SOBRE ESTE PROYECTO</span>
+                <h2>Soluciones web y software <span class="highlight">para negocios reales</span></h2>
+                
                 <p>
-                    Soy Iván Arce Mejía, Ing. industrial y freelancer con <strong>2 años de experiencia</strong> construyendo landing pages y proyectos pequeños. 
-                    No vendo humo: sé HTML, CSS, JavaScript y Python, y me limito a lo que puedo entregar con calidad.
+                    Este sitio nace con un objetivo claro: <strong>ofrecer herramientas digitales accesibles</strong> para pequeños y medianos negocios 
+                    que necesitan presencia en internet o sistemas de gestión sin pagar mensualidades ni depender de soluciones complicadas.
                 </p>
                 <p>
-                    ¿Qué significa eso para ti? Precios claros, código limpio, y un sitio web que carga rápido y se ve bien en cualquier dispositivo. 
-                    Sin sobreingeniería ni frameworks innecesarios.
+                    Aquí encontrarás dos cosas: <strong>landing pages</strong> diseñadas a la medida de tu negocio, y <strong>software de escritorio en Python</strong> 
+                    listo para instalar — desde puntos de venta hasta sistemas especializados como gestión dental o control de inventario industrial.
                 </p>
-                <div class="sobre-mi-stats">
-                    <div class="stat">
+                <p>
+                    Todo con <strong>precios claros, licencias perpetuas</strong> y soporte directo. Sin sobreingeniería, sin letras chiquitas.
+                </p>
+            </div>
+
+            <!-- Columna derecha: stats -->
+            <div class="sobre-mi-stats">
+                <div class="stat">
+                    <i class="fas fa-rocket"></i>
+                    <div>
                         <span class="stat-num">+8</span>
                         <span class="stat-label">Proyectos</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-num">2 años</span>
-                        <span class="stat-label">Experiencia</span>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-cube"></i>
+                    <div>
+                        <span class="stat-num">3</span>
+                        <span class="stat-label">Software a la venta</span>
                     </div>
-                    <div class="stat">
+                </div>
+                <div class="stat">
+                    <i class="fas fa-comments"></i>
+                    <div>
                         <span class="stat-num">100%</span>
                         <span class="stat-label">Comunicación</span>
                     </div>
@@ -181,19 +198,201 @@
         </div>
     </section>
 
+    <!-- SECCIÓN PRODUCTO DESTACADO: INVBAS DENTAL -->
+    <section id="invbas-dental" class="invbas-section">
+        <div class="section-header reveal">
+            <span class="section-tag">PRODUCTO DESTACADO</span>
+            <h2>INVBAS DENTAL — <span class="highlight">Gestión Integral para Consultorios</span></h2>
+            <p>Todo lo que tu consultorio dental necesita en un solo software: pacientes, expediente clínico, agenda, presupuestos, pagos y cumplimiento NOM-024.</p>
+        </div>
+
+        <!-- Bloque hero: imagen + precio (SIEMPRE visible) -->
+        <div class="invbas-hero reveal">
+            <div class="invbas-hero-media">
+                <img src="assets/image/invbas dental.png" alt="INVBAS DENTAL - Sistema de gestión para consultorios dentales" loading="lazy" decoding="async">
+                <span class="invbas-badge">💎 Licencia única</span>
+            </div>
+
+            <div class="invbas-price-card">
+                <span class="price-tag">Precio único</span>
+                <div class="big-price">
+                    <span class="price-currency">$</span>6,500
+                    <span class="price-unit">MXN</span>
+                </div>
+                <p class="price-note">Pago único · Licencia perpetua · Sin mensualidades</p>
+
+                <ul class="price-includes">
+                    <li><i class="fas fa-check-circle"></i> Instalación asistida</li>
+                    <li><i class="fas fa-check-circle"></i> Capacitación inicial de 1 hora</li>
+                    <li><i class="fas fa-check-circle"></i> 6 meses de soporte técnico</li>
+                    <li><i class="fas fa-check-circle"></i> Manual de usuario PDF</li>
+                    <li><i class="fas fa-check-circle"></i> Módulo NOM-024 incluido</li>
+                </ul>
+
+                <div class="invbas-actions">
+                    <button type="button" class="btn-buy-lg" id="dental-buy">
+                        <i class="fab fa-whatsapp"></i> Comprar ahora
+                    </button>
+                    <button type="button" class="btn-demo-lg" id="dental-demo">
+                        <i class="fas fa-desktop"></i> Ver demo
+                    </button>
+                </div>
+
+                <p class="invbas-extra">Soporte extendido 1 año adicional: <strong>+$1,200 MXN</strong> (opcional)</p>
+            </div>
+        </div>
+
+        <!-- Botón "Ver más" (toggle) -->
+        <div class="invbas-toggle-wrap reveal">
+            <button type="button" class="invbas-toggle-btn" id="dental-toggle" aria-expanded="false" aria-controls="dental-details">
+                <span class="toggle-text">Ver toda la información</span>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            </button>
+        </div>
+
+        <!-- Contenido colapsable -->
+        <div class="invbas-details" id="dental-details">
+            <div class="invbas-details-inner">
+
+                <!-- Bloque: Problema que resuelve -->
+                <div class="invbas-block invbas-problem">
+                    <h3><span class="block-emoji">🎯</span> ¿Qué problema resuelve?</h3>
+                    <p class="block-intro">Si tu consultorio dental aún usa libretas, hojas de cálculo o software extranjero que no cumple la normativa mexicana, seguramente enfrentas:</p>
+                    <div class="problem-grid">
+                        <div class="problem-item"><i class="fas fa-folder-open"></i><span>Expedientes en papel que se pierden o se maltratan</span></div>
+                        <div class="problem-item"><i class="fas fa-calendar-times"></i><span>Citas olvidadas o pacientes que no llegan</span></div>
+                        <div class="problem-item"><i class="fas fa-file-invoice-dollar"></i><span>Presupuestos hechos a mano sin seguimiento</span></div>
+                        <div class="problem-item"><i class="fas fa-user-secret"></i><span>Sin control de quién modifica qué en el sistema</span></div>
+                        <div class="problem-item"><i class="fas fa-gavel"></i><span>Riesgo de incumplir la NOM-024-SSA3-2012</span></div>
+                    </div>
+                    <p class="block-outro">INVBAS DENTAL te da el <strong>control total del consultorio</strong> con una herramienta profesional, segura y 100% hecha para México.</p>
+                </div>
+
+                <!-- Bloque: Qué incluye -->
+                <div class="invbas-block invbas-features">
+                    <h3><span class="block-emoji">✅</span> ¿Qué incluye INVBAS DENTAL?</h3>
+                    <div class="features-grid">
+                        <div class="feature-item"><i class="fas fa-user-injured"></i><div><h4>Gestión de pacientes</h4><p>Registro con CURP, alergias, antecedentes médicos y ficha 360° con historial completo.</p></div></div>
+                        <div class="feature-item"><i class="fas fa-tooth"></i><div><h4>Expediente clínico</h4><p>Historia por visita, odontograma interactivo, signos vitales y consentimientos con firma.</p></div></div>
+                        <div class="feature-item"><i class="fas fa-calendar-check"></i><div><h4>Agenda de citas</h4><p>Programación con duración, motivo, odontólogo asignado y estados de cita.</p></div></div>
+                        <div class="feature-item"><i class="fas fa-prescription"></i><div><h4>Recetas y presupuestos</h4><p>Generación en PDF con ítems, descuentos y seguimiento (aprobado, rechazado, pagado).</p></div></div>
+                        <div class="feature-item"><i class="fas fa-credit-card"></i><div><h4>Cobros y pagos</h4><p>Folio automático, métodos de pago, anulación con motivo y recibos en PDF.</p></div></div>
+                        <div class="feature-item"><i class="fas fa-chart-bar"></i><div><h4>Reportes y auditoría</h4><p>Cada acción registrada con usuario, fecha y detalle. Detección de manipulación de la BD.</p></div></div>
+                        <div class="feature-item"><i class="fas fa-database"></i><div><h4>Respaldos automáticos</h4><p>Backup al cerrar el programa y antes de operaciones críticas. Gestión manual incluida.</p></div></div>
+                        <div class="feature-item"><i class="fas fa-shield-alt"></i><div><h4>Seguridad multi-usuario</h4><p>Roles y permisos, contraseñas cifradas con bcrypt, bloqueo por inactividad.</p></div></div>
+                    </div>
+                </div>
+
+                <!-- Bloque destacado: NOM-024 -->
+                <div class="invbas-nom">
+                    <div class="nom-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="nom-content">
+                        <span class="nom-tag">DIFERENCIADOR CLAVE</span>
+                        <h3>Cumplimiento <span class="highlight">NOM-024-SSA3-2012</span></h3>
+                        <p>INVBAS DENTAL incluye un módulo de exportación de expediente clínico conforme a la norma oficial mexicana, algo que el software extranjero simplemente no contempla.</p>
+                        <ul class="nom-list">
+                            <li><i class="fas fa-check"></i> Exportación XML estructurado (compatible con CDA) con las <strong>77 variables</strong> requeridas</li>
+                            <li><i class="fas fa-check"></i> Exportación JSON para integraciones con otros sistemas</li>
+                            <li><i class="fas fa-check"></i> Archivos generados automáticamente en la carpeta de datos del usuario</li>
+                            <li><i class="fas fa-check"></i> Posibilidad de copiarlos a USB o enviarlos por correo</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bloque: Requisitos + Entregables -->
+                <div class="invbas-duo">
+                    <div class="invbas-block invbas-requirements">
+                        <h3><span class="block-emoji">💻</span> Requisitos</h3>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check"></i> Computadora con Windows 10 u 11</li>
+                            <li><i class="fas fa-check"></i> No requiere internet</li>
+                            <li><i class="fas fa-check"></i> Instalación local, los datos quedan en tu consultorio</li>
+                            <li><i class="fas fa-check"></i> Compatible con impresora para recetas y recibos</li>
+                        </ul>
+                    </div>
+
+                    <div class="invbas-block invbas-deliverables">
+                        <h3><span class="block-emoji">🚀</span> Lo que recibes</h3>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check"></i> <strong>Licencia perpetua</strong> para 1 PC</li>
+                            <li><i class="fas fa-check"></i> <strong>Instalación asistida</strong> por videollamada</li>
+                            <li><i class="fas fa-check"></i> <strong>Capacitación inicial</strong> de 1 hora</li>
+                            <li><i class="fas fa-check"></i> <strong>Soporte técnico</strong> 6 meses por WhatsApp/correo</li>
+                            <li><i class="fas fa-check"></i> <strong>Manual de usuario</strong> en PDF</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bloque: ROI -->
+                <div class="invbas-roi">
+                    <h3><span class="block-emoji">📈</span> ¿Por qué es una inversión, no un gasto?</h3>
+                    <p class="roi-intro">Un consultorio dental promedio en México:</p>
+
+                    <div class="roi-math">
+                        <div class="roi-step">
+                            <span class="roi-num">10</span>
+                            <span class="roi-label">pacientes / semana</span>
+                        </div>
+                        <span class="roi-op">×</span>
+                        <div class="roi-step">
+                            <span class="roi-num">$800</span>
+                            <span class="roi-label">ticket promedio</span>
+                        </div>
+                        <span class="roi-op">×</span>
+                        <div class="roi-step">
+                            <span class="roi-num">4</span>
+                            <span class="roi-label">semanas</span>
+                        </div>
+                        <span class="roi-op">=</span>
+                        <div class="roi-step roi-highlight">
+                            <span class="roi-num">$32,000</span>
+                            <span class="roi-label">MXN al mes</span>
+                        </div>
+                    </div>
+
+                    <div class="roi-conclusion">
+                        <i class="fas fa-trophy"></i>
+                        <p>Con solo <strong>recuperar 1 cita perdida al mes</strong> por mala gestión, el sistema ya se está pagando. Y el cumplimiento NOM-024 te evita <strong>multas y sanciones</strong> que pueden costar mucho más.</p>
+                    </div>
+                </div>
+
+                <!-- CTA Final -->
+                <div class="invbas-final-cta">
+                    <div class="final-cta-text">
+                        <h3>¿Listo para profesionalizar tu consultorio?</h3>
+                        <p>Escríbeme y te respondo en menos de 24 horas con toda la información.</p>
+                    </div>
+                    <button type="button" class="btn-buy-lg" id="dental-buy-bottom">
+                        <i class="fab fa-whatsapp"></i> Quiero INVBAS DENTAL
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <!-- /fin contenido colapsable -->
+    </section>
+
     <!-- SOFTWARE -->
     <section id="software" class="software-section">
         <div class="section-header reveal">
-            <span class="section-tag">SOFTWARE</span>
-            <h2>Programas en <span class="highlight">Python</span></h2>
-            <p>Aplicaciones de escritorio y scripts que he desarrollado para empresas.</p>
+            <span class="section-tag">SOFTWARE A LA VENTA</span>
+            <h2>Programas en <span class="highlight">Python listos para tu negocio</span></h2>
+            <p>Sistemas probados, listos para instalar. Precios claros, sin mensualidades ni sorpresas.</p>
         </div>
 
-        <div class="software-carousel-container reveal">
-            <div class="software-carousel" id="software-carousel"></div>
-            <button class="carousel-btn prev" id="sw-prev-btn" aria-label="Software anterior"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-btn next" id="sw-next-btn" aria-label="Software siguiente"><i class="fas fa-chevron-right"></i></button>
-            <div class="carousel-indicators" id="sw-indicators"></div>
+        <div id="software-grid" class="software-grid"></div>
+
+        <!-- CTA personalizado -->
+        <div class="software-cta reveal">
+            <div class="software-cta-text">
+                <h3>¿Necesitas algo <span class="highlight">a medida</span>?</h3>
+                <p>Desarrollo software personalizado según tu flujo de trabajo. Cuéntame tu idea y te doy un presupuesto sin compromiso.</p>
+            </div>
+            <a href="#contacto" class="software-cta-btn">
+                Cotizar proyecto a medida <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
     </section>
 
@@ -233,36 +432,6 @@
         </div>
     </section>
 
-    <!-- WORDPRESS (NUEVA SECCIÓN) -->
-    <section id="wordpress" class="wordpress-section">
-        <div class="section-header reveal">
-            <span class="section-tag">WORDPRESS</span>
-            <h2>Sitios en WordPress <span class="highlight">autogestionables</span></h2>
-            <p>Páginas profesionales que tú mismo podrás actualizar sin depender de un programador.</p>
-        </div>
-
-        <div class="pasos-container">
-            <div class="paso reveal">
-                <div class="paso-icon"><i class="fas fa-paint-brush"></i></div>
-                <div class="paso-numero">01</div>
-                <h3>Elección del diseño</h3>
-                <p>Vemos juntos plantillas, colores y estructura según tu marca. Siempre adaptable a móviles.</p>
-            </div>
-            <div class="paso reveal">
-                <div class="paso-icon"><i class="fas fa-plug"></i></div>
-                <div class="paso-numero">02</div>
-                <h3>Desarrollo y plugins</h3>
-                <p>Instalo WordPress, configuro plugins esenciales (SEO, seguridad, formularios) y personalizo cada sección.</p>
-            </div>
-            <div class="paso reveal">
-                <div class="paso-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                <div class="paso-numero">03</div>
-                <h3>Entrega con capacitación</h3>
-                <p>Te enseño a editar textos, imágenes y secciones. Te entrego un manual y soporte inicial.</p>
-            </div>
-        </div>
-    </section>
-
     <!-- SKILLS -->
     <section id="skills" class="skills-section">
         <div class="section-header reveal">
@@ -281,9 +450,9 @@
     <!-- CONTACTO -->
     <section id="contacto" class="contacto-section">
         <div class="form-card reveal">
-            <h2>¿Necesitas una <span class="highlight">landing page</span>?</h2>
+            <h2>¿Necesitas una <span class="highlight">landing page o software</span>?</h2>
             <p>Escríbeme y te responderé en menos de 24 horas.</p>
-            <form id="contact-form">
+            <form id="contact-form" novalidate>
                 <div class="input-group">
                     <i class="fas fa-user" aria-hidden="true"></i>
                     <input type="text" id="nombre" name="name" placeholder="Tu nombre" required autocomplete="name">
@@ -296,7 +465,10 @@
                     <i class="fas fa-pen" aria-hidden="true"></i>
                     <textarea id="mensaje" name="message" rows="4" placeholder="Cuéntame qué tipo de landing page necesitas..." required></textarea>
                 </div>
-                <div id="form-feedback" class="form-feedback"></div>
+                <!-- Honeypot anti-spam (invisible para humanos) -->
+                <input type="text" name="_gotcha" id="gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                
+                <div id="form-feedback" class="form-feedback" role="status" aria-live="polite"></div>
                 <div class="btns-group">
                     <button type="submit" class="btn-email" id="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Correo</button>
                     <button type="button" id="btn-whatsapp" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
@@ -313,18 +485,18 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img class="footer-logo-img" src="assets/image/logo-central.png" alt="Iván Arce Freelancer" width="120" height="auto" loading="lazy">
+                <img class="footer-logo-img" src="assets/image/logo-central.png" alt="Iván Arce Freelancer" width="120" height="auto" loading="lazy" decoding="async">
                 <p>Landing pages claras y efectivas.</p>
             </div>
             <div class="footer-links">
                 <h4>Explorar</h4>
-                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#sobre-mi">Proyecto</a>
                 <a href="#work">Trabajos</a>
                 <a href="#proceso">Proceso</a>
                 <a href="#skills">Skills</a>
+                <a href="#invbas-dental">INVBAS DENTAL</a>
                 <a href="#software">Software</a>
                 <a href="#software-proceso">Proceso Software</a>
-                <a href="#wordpress">WordPress</a>
             </div>
             <div class="footer-links">
                 <h4>Legal</h4>
@@ -333,15 +505,16 @@
             </div>
             <div class="socials">
                 <h4>Conectar</h4>
-                <a href="https://github.com/CodigoTecnologico" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
-                <a href="#" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://github.com/CodigoTecnologico" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+                <!-- ⚠️ Reemplaza por tu perfil real de Instagram -->
+                <a href="https://www.instagram.com/tu_usuario" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
         </div>
         <p class="copy">&copy; 2026 Iván Arce Mejía. Todos los derechos reservados</p>
     </footer>
 
     <!-- Botón volver arriba -->
-    <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Volver arriba"><i class="fas fa-chevron-up"></i></button>
+    <button id="scroll-top-btn" class="scroll-top-btn" type="button" aria-label="Volver arriba"><i class="fas fa-chevron-up"></i></button>
 
     <script type="application/ld+json">
     {
@@ -353,8 +526,7 @@
         "image": "https://tudominio.com/assets/image/ivan.jpg",
         "description": "Desarrollador de landing pages claras y funcionales. HTML, CSS, JavaScript y Python.",
         "sameAs": [
-            "https://www.linkedin.com/in/ivanarce",
-            "https://github.com/ivanarce"
+            "https://github.com/CodigoTecnologico"
         ]
     }
     </script>

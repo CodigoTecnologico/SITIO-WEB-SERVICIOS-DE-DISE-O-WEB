@@ -1,5 +1,5 @@
-// CONFIGURACIÓN PERSONAL (cambiar por tus datos)
-const MY_EMAIL = 'arcemejiaivan@outlook.com';          // ← Aquí pon tu correo real
+// ========== CONFIGURACIÓN PERSONAL ==========
+const MY_EMAIL = 'arcemejiaivan@outlook.com';
 const MY_WHATSAPP = '524422556148';
 const WHATSAPP_MSG = 'Hola, vi tu portafolio y me gustaría cotizar un proyecto.';
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mbdnydzv';
@@ -12,7 +12,6 @@ function actualizarEmail() {
         link.textContent = MY_EMAIL;
     }
 }
-// Ejecutar al cargar
 document.addEventListener('DOMContentLoaded', actualizarEmail);
 
 // ========== MENÚ MÓVIL FULLSCREEN ==========
@@ -24,13 +23,15 @@ const mobileLinks = document.querySelectorAll('.mobile-menu-content a');
 function openMobileMenu() {
     mobileMenuOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    const icon = menuToggle.querySelector('i');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    const icon = menuToggle?.querySelector('i');
     if (icon) { icon.classList.remove('fa-bars'); icon.classList.add('fa-times'); }
 }
 function closeMobileMenu() {
     mobileMenuOverlay.classList.remove('active');
     document.body.style.overflow = '';
-    const icon = menuToggle.querySelector('i');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+    const icon = menuToggle?.querySelector('i');
     if (icon) { icon.classList.add('fa-bars'); icon.classList.remove('fa-times'); }
 }
 if (menuToggle) menuToggle.addEventListener('click', () => {
@@ -39,34 +40,59 @@ if (menuToggle) menuToggle.addEventListener('click', () => {
 if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
 mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) closeMobileMenu();
+    if (e.key === 'Escape' && mobileMenuOverlay?.classList.contains('active')) closeMobileMenu();
 });
 
 // ========== CARRUSEL HERO ==========
 const carouselData = [
-    { image: "url('assets/image/1.JPG')", badge: "🚀 2 años creando landing pages", title: "Landing pages <br> <span class='highlight'>claras y funcionales.</span>", description: "Freelancer front-end con 2 años de experiencia. Me enfoco en lo que sé hacer bien: páginas sencillas, rápidas y que cumplen su objetivo." },
-    { image: "url('assets/image/2.JPG')", badge: "Sin sobreingeniería", title: "Solo HTML, CSS, JS <span class='highlight'>y algo de Python</span>", description: "Nada de frameworks pesados. Código que entiendes y que carga al instante." },
-    { image: "url('assets/image/3.JPG')", badge: "Proyectos a tu medida", title: "Landing que <span class='highlight'>convierte visitantes</span> en clientes", description: "Diseño pensado en tu negocio, sin distracciones ni complejidades." }
+    {
+        image: "url('assets/image/1.JPG')",
+        title: "Web y software <br> <span class='highlight'>para negocios reales.</span>",
+        description: "Landing pages a la medida y software de escritorio en Python listo para instalar. Precios claros, licencias perpetuas y soporte directo."
+    },
+    {
+        image: "url('assets/image/2.JPG')",
+        title: "Páginas web <br> <span class='highlight'>claras y funcionales.</span>",
+        description: "Sitios sencillos, rápidos y que cumplen su objetivo. HTML, CSS y JS sin sobreingeniería ni frameworks innecesarios."
+    },
+    {
+        image: "url('assets/image/3.JPG')",
+        title: "Sistemas de escritorio <br> <span class='highlight'>listos para tu negocio.</span>",
+        description: "POS, inventario, gestión dental y más. Licencia perpetua, sin mensualidades y funcionan sin internet."
+    }
 ];
+
 let currentSlide = 0, autoSlideInterval, isTransitioning = false;
-const hero = document.getElementById('hero'), heroBadge = document.getElementById('hero-badge'), heroTitle = document.getElementById('hero-title'), heroDescription = document.getElementById('hero-description'),
-      indicators = document.querySelectorAll('#carousel-indicators .indicator'), prevBtn = document.getElementById('prev-btn'), nextBtn = document.getElementById('next-btn');
+const hero = document.getElementById('hero');
+const heroBadge = document.getElementById('hero-badge');
+const heroTitle = document.getElementById('hero-title');
+const heroDescription = document.getElementById('hero-description');
+const indicators = document.querySelectorAll('#carousel-indicators .indicator');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
 
 function updateSlide(index) {
     if (isTransitioning || !hero || index === currentSlide) return;
     isTransitioning = true;
+
+    const safety = setTimeout(() => { isTransitioning = false; }, 1200);
+
     hero.style.setProperty('--next-image', carouselData[index].image);
     hero.style.setProperty('--next-opacity', '1');
     if (heroBadge) heroBadge.innerHTML = carouselData[index].badge;
     if (heroTitle) heroTitle.innerHTML = carouselData[index].title;
     if (heroDescription) heroDescription.textContent = carouselData[index].description;
     indicators.forEach((ind, i) => ind.classList.toggle('active', i === index));
+
     const onTransitionEnd = (e) => {
         if (e.propertyName === 'opacity' && e.target === hero) {
+            clearTimeout(safety);
             hero.style.backgroundImage = carouselData[index].image;
             hero.style.setProperty('--next-opacity', '0');
             hero.removeEventListener('transitionend', onTransitionEnd);
-            currentSlide = index; isTransitioning = false; resetAutoSlide();
+            currentSlide = index;
+            isTransitioning = false;
+            resetAutoSlide();
         }
     };
     hero.addEventListener('transitionend', onTransitionEnd);
@@ -79,12 +105,16 @@ if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 indicators.forEach((ind, idx) => ind.addEventListener('click', () => updateSlide(idx)));
 if (hero) {
     hero.style.backgroundImage = carouselData[0].image;
-    hero.style.setProperty('--next-image', 'none'); hero.style.setProperty('--next-opacity', '0');
+    hero.style.setProperty('--next-image', 'none');
+    hero.style.setProperty('--next-opacity', '0');
     resetAutoSlide();
     hero.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
     hero.addEventListener('mouseleave', resetAutoSlide);
 }
-document.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') prevSlide(); if (e.key === 'ArrowRight') nextSlide(); });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+});
 
 // ========== NAVBAR SCROLL ==========
 const navbar = document.querySelector('.navbar');
@@ -92,25 +122,109 @@ window.addEventListener('scroll', () => { if (navbar) navbar.classList.toggle('s
 
 // ========== SCROLL REVEAL ==========
 const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); revealObserver.unobserve(entry.target); } });
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            revealObserver.unobserve(entry.target);
+        }
+    });
 }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+// ========== FALLBACK SCROLL REVEAL ==========
+// Fuerza visibilidad de elementos ya visibles si el observer no dispara
+function forceRevealVisible() {
+    document.querySelectorAll('.reveal:not(.active)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add('active');
+        }
+    });
+}
+window.addEventListener('load', () => {
+    setTimeout(forceRevealVisible, 150);
+});
+window.addEventListener('resize', () => {
+    clearTimeout(window.__revealResizeT);
+    window.__revealResizeT = setTimeout(forceRevealVisible, 200);
+});
+
 // ========== PORTFOLIO ==========
 const proyectos = [
-    { nombre: "Sitio web para Comercializadora de resinas plásticas", tipo: "Página de productos con WhatsApp, ubicación, email...", tags: ["HTML","CSS","JavaScript"], url: "https://gtrplast.com.mx/", imagen: "assets/image/gtr.jpg" },
-    { nombre: "Sitio web para clínica dental", tipo: "Página de servicios con WhatsApp, ubicación, email...", tags: ["HTML","CSS","JavaScript"], url: "https://odontologiaarce.com.mx", imagen: "assets/image/odontologia.JPG" }
+    {
+        numero: "01",
+        nombre: "GTR Plast — Comercializadora de resinas plásticas",
+        tipo: "Sitio corporativo con catálogo de productos, formulario de contacto directo por WhatsApp, ubicación y ficha técnica por material.",
+        tags: ["HTML", "CSS", "JavaScript", "Responsive"],
+        url: "https://gtrplast.com.mx/",
+        urlLabel: "gtrplast.com.mx",
+        imagen: "assets/image/gtr.jpg"
+    },
+    {
+        numero: "02",
+        nombre: "Odontología Arce — Clínica dental",
+        tipo: "Sitio para clínica dental con servicios, agenda de citas vía WhatsApp, galería y sección de ubicación. Diseño limpio y confiable.",
+        tags: ["HTML", "CSS", "JavaScript", "SEO básico"],
+        url: "https://odontologiaarce.com.mx",
+        urlLabel: "odontologiaarce.com.mx",
+        imagen: "assets/image/odontologia.JPG"
+    }
 ];
+
 const grid = document.getElementById('portfolio-grid');
+
 function cargarProyectos() {
     if (!grid) return;
+    grid.innerHTML = '';
+
     proyectos.forEach((p, i) => {
-        const card = document.createElement('div'); card.className = 'project-card reveal'; card.style.transitionDelay = `${i * 0.1}s`;
-        card.innerHTML = `<img src="${p.imagen}" class="project-img" alt="${p.nombre}" loading="lazy"><div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div><h3 style="margin:12px 0 5px;font-size:1.25rem;">${p.nombre}</h3><p style="color:#A0A0B0;font-size:0.85rem">${p.tipo}</p><a href="${p.url}" target="_blank" rel="noopener noreferrer" class="project-link">Ver proyecto <i class="fas fa-arrow-right"></i></a>`;
+        const card = document.createElement('article');
+        card.className = 'project-card reveal';
+        card.style.transitionDelay = `${i * 0.12}s`;
+
+        const urlCorta = p.urlLabel || p.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+
+        card.innerHTML = `
+            <div class="project-browser">
+                <div class="browser-bar">
+                    <span class="browser-dot red"></span>
+                    <span class="browser-dot yellow"></span>
+                    <span class="browser-dot green"></span>
+                    <span class="browser-url">${urlCorta}</span>
+                </div>
+                <div class="project-media">
+                    <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" decoding="async">
+                    <div class="project-overlay">
+                        <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="project-visit-btn">
+                            <i class="fas fa-external-link-alt"></i> Visitar sitio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-body">
+                <span class="project-number">PROYECTO ${p.numero}</span>
+                <h3>${p.nombre}</h3>
+                <p>${p.tipo}</p>
+                <div class="tags">
+                    ${p.tags.map(t => `<span>${t}</span>`).join('')}
+                </div>
+                <div class="project-footer">
+                    <span class="project-status">Sitio en línea</span>
+                    <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="project-link">
+                        Ver proyecto <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        `;
+
         grid.appendChild(card);
     });
-    document.querySelectorAll('.project-card.reveal').forEach(el => revealObserver.observe(el));
+
+    grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    setTimeout(forceRevealVisible, 100);
 }
+
 cargarProyectos();
 
 // ========== FORMULARIO DE CONTACTO (FORMSPREE) ==========
@@ -121,11 +235,14 @@ const submitBtn = document.getElementById('btn-submit');
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
+        const gotcha = document.getElementById('gotcha');
+        if (gotcha && gotcha.value.trim() !== '') return;
+
         const nombre = document.getElementById('nombre').value.trim();
         const email = document.getElementById('email').value.trim();
         const mensaje = document.getElementById('mensaje').value.trim();
-        
+
         if (!nombre || !email || !mensaje) {
             mostrarFeedback('Por favor completa todos los campos.', 'error');
             return;
@@ -134,13 +251,12 @@ if (contactForm) {
             mostrarFeedback('Ingresa un correo electrónico válido.', 'error');
             return;
         }
-        
-        // Deshabilitar botón y mostrar estado
+
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Enviando...';
         }
-        
+
         try {
             const response = await fetch(FORMSPREE_ENDPOINT, {
                 method: 'POST',
@@ -148,20 +264,16 @@ if (contactForm) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    name: nombre,
-                    email: email,
-                    message: mensaje
-                })
+                body: JSON.stringify({ name: nombre, email: email, message: mensaje })
             });
-            
+
             if (response.ok) {
                 mostrarFeedback('¡Mensaje enviado con éxito! Te responderé pronto.', 'success');
                 contactForm.reset();
             } else {
                 const data = await response.json();
                 if (data.errors) {
-                    mostrarFeedback(data.errors.map(error => error.message).join(', '), 'error');
+                    mostrarFeedback(data.errors.map(err => err.message).join(', '), 'error');
                 } else {
                     mostrarFeedback('Error al enviar. Por favor intenta de nuevo más tarde.', 'error');
                 }
@@ -189,52 +301,150 @@ function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Botón de WhatsApp
+// ========== BOTÓN WHATSAPP ==========
 const btnWhatsapp = document.getElementById('btn-whatsapp');
-if (btnWhatsapp) btnWhatsapp.addEventListener('click', () => window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(WHATSAPP_MSG)}`, '_blank'));
-
-// ========== SMOOTH SCROLL ==========
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href'); if (href === "#") return;
-        const target = document.querySelector(href);
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-    });
+if (btnWhatsapp) btnWhatsapp.addEventListener('click', () => {
+    window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(WHATSAPP_MSG)}`, '_blank');
 });
 
-// ========== CARRUSEL DE SOFTWARE ==========
-const softwareProyectos = [
-    { nombre: "Registro de Residuos Industriales", descripcion: "Sistema que permite registrar, clasificar y generar reportes de residuos no peligrosos. Incluye dashboard de KPIs.", tags: ["Python","Tkinter","SQLite"], imagen: "assets/image/residuos.jpg" },
-    { nombre: "Control de Inventario, Entradas, Ventas y Reportes", descripcion: "Programa que registra entradas/salidas de material, Ventas, Reportes y actualiza inventario en tiempo real.", tags: ["Python","Tkinter","SQLite"], imagen: "assets/image/bascula.jpg" }
+// ========== SOFTWARE / PRODUCTOS PYTHON ==========
+const softwareProductos = [
+    {
+        nombre: "MiTienda POS — Punto de venta para tiendas y comercios",
+        descripcion: "Sistema de punto de venta ideal para abarrotes, panaderías, carnicerías, fondas, farmacias, ferreterías y cualquier negocio de mostrador. Licencia de por vida, sin mensualidades. Funciona sin internet.",
+        tags: ["Python", "POS", "Escritorio"],
+        imagen: "assets/image/invbas punto de venta.png",
+        badge: "Nuevo",
+        features: [
+            "Control de fiado por cliente con abonos y saldos",
+            "Cortes de caja en 2 minutos: fondo, retiros y diferencias",
+            "Alertas automáticas de stock bajo",
+            "Ventas a granel (kg/L) y precios de mayoreo automáticos",
+            "Usuarios con roles: cajero, encargado y dueño",
+            "Reportes de ventas, márgenes y productos más rentables"
+        ],
+        idealPara: [
+            { icono: "🏪", label: "Abarrotes" },
+            { icono: "🥖", label: "Panaderías" },
+            { icono: "🥩", label: "Carnicerías" },
+            { icono: "🌮", label: "Fondas" },
+            { icono: "💊", label: "Farmacias" },
+            { icono: "🔧", label: "Ferreterías" }
+        ],
+        precio: "Desde $900 MXN",
+        mensajeWhatsApp: "Hola, tengo un negocio y me interesa *MiTienda POS*. ¿Me puedes dar más información y precio final?"
+    },
+    {
+        nombre: "Invbas Plástico — Sistema de Inventario para Bodegas",
+        descripcion: "Sistema especializado para bodegas de plásticos (PEAD, PEBD, PP, PET y más). Control en tiempo real, trazabilidad por lote y cálculo automático de utilidad. Licencia perpetua, sin mensualidades.",
+        tags: ["Python", "Inventario", "Escritorio"],
+        imagen: "assets/image/invbas.png",
+        badge: "",
+        features: [
+            "Control en tiempo real: stock, entradas, salidas, ventas y mermas",
+            "Trazabilidad por lote con historial completo de cada material",
+            "Cálculo automático de utilidad bruta (compras vs ventas)",
+            "Reportes visuales exportables a Excel",
+            "Usuarios con roles (admin, supervisor, operador) y auditoría",
+            "Respaldos automáticos cada 4 horas"
+        ],
+        idealPara: [
+            { icono: "🏭", label: "Bodegas de plásticos" },
+            { icono: "♻️", label: "Recicladoras" },
+            { icono: "📦", label: "Distribuidoras" },
+            { icono: "🧴", label: "Fábricas de envases" }
+        ],
+        precio: "Desde $3,500 MXN",
+        mensajeWhatsApp: "Hola, me interesa *Invbas Plástico Software* (sistema de inventario para bodegas de plásticos). ¿Me puedes dar más información y precio final?"
+    }
 ];
-const swCarousel = document.getElementById('software-carousel'), swPrevBtn = document.getElementById('sw-prev-btn'), swNextBtn = document.getElementById('sw-next-btn'), swIndicators = document.getElementById('sw-indicators');
-let swCurrent = 0, swAutoInterval;
-function buildSoftwareCarousel() {
-    if (!swCarousel) return;
-    swCarousel.innerHTML = ''; swIndicators.innerHTML = '';
-    softwareProyectos.forEach((proj, i) => {
-        const slide = document.createElement('div'); slide.className = 'sw-slide';
-        slide.innerHTML = `<img src="${proj.imagen}" alt="${proj.nombre}" loading="lazy"><div class="tags">${proj.tags.map(t => `<span>${t}</span>`).join('')}</div><h3>${proj.nombre}</h3><p>${proj.descripcion}</p>`;
-        swCarousel.appendChild(slide);
-        const dot = document.createElement('button'); dot.className = 'indicator'; dot.dataset.index = i; dot.addEventListener('click', () => goToSlide(i));
-        swIndicators.appendChild(dot);
+
+const softwareGrid = document.getElementById('software-grid');
+
+function buildSoftwareProducts() {
+    if (!softwareGrid) return;
+    softwareGrid.innerHTML = '';
+
+    softwareProductos.forEach((prod, i) => {
+        const card = document.createElement('article');
+        card.className = 'product-card reveal';
+        card.style.transitionDelay = `${i * 0.1}s`;
+
+        const featuresHTML = prod.features
+            .map(f => `<li><i class="fas fa-check"></i><span>${f}</span></li>`)
+            .join('');
+
+        const badgeHTML = prod.badge
+            ? `<span class="product-badge">${prod.badge}</span>`
+            : '';
+
+        const idealHTML = prod.idealPara
+            ? `
+                <div class="product-ideal">
+                    <span class="ideal-title">Ideal para:</span>
+                    <div class="ideal-chips">
+                        ${prod.idealPara.map(g => `
+                            <span class="ideal-chip">
+                                <span class="ideal-emoji">${g.icono}</span>${g.label}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `
+            : '';
+
+        card.innerHTML = `
+            <div class="product-media">
+                <img src="${prod.imagen}" alt="${prod.nombre}" loading="lazy" decoding="async">
+                ${badgeHTML}
+            </div>
+            <div class="product-body">
+                <div class="tags">${prod.tags.map(t => `<span>${t}</span>`).join('')}</div>
+                <h3>${prod.nombre}</h3>
+                <p>${prod.descripcion}</p>
+                <ul class="product-features">${featuresHTML}</ul>
+                ${idealHTML}
+                <div class="product-price">
+                    <span class="price-label">Precio</span>
+                    <span class="price-value">${prod.precio}</span>
+                </div>
+                <div class="product-actions">
+                    <button type="button" class="btn-buy" data-index="${i}">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </button>
+                    <button type="button" class="btn-demo" data-index="${i}">
+                        <i class="fas fa-desktop"></i> Ver demo
+                    </button>
+                </div>
+            </div>
+        `;
+
+        softwareGrid.appendChild(card);
     });
-    updateSoftwareCarousel(); startAutoSlideSW();
+
+    softwareGrid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    setTimeout(forceRevealVisible, 100);
+
+    // Botones comprar
+    softwareGrid.querySelectorAll('.btn-buy').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const prod = softwareProductos[btn.dataset.index];
+            const msg = prod.mensajeWhatsApp || `Hola, me interesa el sistema ${prod.nombre}.`;
+            window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        });
+    });
+
+    // Botones demo
+    softwareGrid.querySelectorAll('.btn-demo').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const prod = softwareProductos[btn.dataset.index];
+            const msg = `Hola, me gustaría ver una demo del sistema *${prod.nombre}*. ¿Cuándo podemos agendar?`;
+            window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        });
+    });
 }
-function updateSoftwareCarousel() { swCarousel.style.transform = `translateX(-${swCurrent * 100}%)`; document.querySelectorAll('#sw-indicators .indicator').forEach((dot, i) => dot.classList.toggle('active', i === swCurrent)); }
-function goToSlide(index) { swCurrent = index; updateSoftwareCarousel(); resetAutoSlideSW(); }
-function nextSlideSW() { swCurrent = (swCurrent + 1) % softwareProyectos.length; updateSoftwareCarousel(); resetAutoSlideSW(); }
-function prevSlideSW() { swCurrent = (swCurrent - 1 + softwareProyectos.length) % softwareProyectos.length; updateSoftwareCarousel(); resetAutoSlideSW(); }
-function startAutoSlideSW() { clearInterval(swAutoInterval); swAutoInterval = setInterval(nextSlideSW, 6000); }
-function resetAutoSlideSW() { clearInterval(swAutoInterval); startAutoSlideSW(); }
-if (swPrevBtn) swPrevBtn.addEventListener('click', prevSlideSW);
-if (swNextBtn) swNextBtn.addEventListener('click', nextSlideSW);
-const swContainer = document.querySelector('.software-carousel-container');
-if (swContainer) {
-    swContainer.addEventListener('mouseenter', () => clearInterval(swAutoInterval));
-    swContainer.addEventListener('mouseleave', startAutoSlideSW);
-}
-if (softwareProyectos.length) buildSoftwareCarousel();
+
+buildSoftwareProducts();
 
 // ========== SCROLL TO TOP ==========
 const scrollTopBtn = document.getElementById('scroll-top-btn');
@@ -248,6 +458,96 @@ if (scrollTopBtn) {
     const banner = document.getElementById('cookie-banner');
     if (!banner) return;
     if (!localStorage.getItem('cookies-consent')) banner.classList.add('show');
-    document.getElementById('cookie-accept').addEventListener('click', () => { localStorage.setItem('cookies-consent', 'accepted'); banner.classList.remove('show'); });
-    document.getElementById('cookie-reject').addEventListener('click', () => { localStorage.setItem('cookies-consent', 'rejected'); banner.classList.remove('show'); });
+
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+    if (acceptBtn) acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookies-consent', 'accepted');
+        banner.classList.remove('show');
+    });
+    if (rejectBtn) rejectBtn.addEventListener('click', () => {
+        localStorage.setItem('cookies-consent', 'rejected');
+        banner.classList.remove('show');
+    });
+})();
+
+// ========== INVBAS DENTAL - BOTONES WHATSAPP ==========
+(function() {
+    const MSG_BUY = 'Hola, me interesa *INVBAS DENTAL* (sistema integral para consultorios dentales con cumplimiento NOM-024) por $6,500 MXN. ¿Me puedes dar más información para adquirirlo?';
+    const MSG_DEMO = 'Hola, me gustaría ver una *demo de INVBAS DENTAL* antes de comprar. ¿Cuándo podemos agendar?';
+
+    const buyBtn = document.getElementById('dental-buy');
+    const demoBtn = document.getElementById('dental-demo');
+    const buyBottom = document.getElementById('dental-buy-bottom');
+
+    if (buyBtn) buyBtn.addEventListener('click', () =>
+        window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(MSG_BUY)}`, '_blank')
+    );
+    if (buyBottom) buyBottom.addEventListener('click', () =>
+        window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(MSG_BUY)}`, '_blank')
+    );
+    if (demoBtn) demoBtn.addEventListener('click', () =>
+        window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(MSG_DEMO)}`, '_blank')
+    );
+})();
+
+// ========== INVBAS DENTAL - TOGGLE "VER MÁS" ==========
+(function() {
+    const toggleBtn = document.getElementById('dental-toggle');
+    const details = document.getElementById('dental-details');
+    if (!toggleBtn || !details) return;
+
+    const toggleText = toggleBtn.querySelector('.toggle-text');
+    const MOBILE_BREAKPOINT = 1000;
+
+    function isMobile() {
+        return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+
+    function setOpen(open) {
+        if (open) {
+            details.classList.add('is-open');
+            toggleBtn.classList.add('is-open');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            if (toggleText) toggleText.textContent = 'Ver menos';
+        } else {
+            details.classList.remove('is-open');
+            toggleBtn.classList.remove('is-open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            if (toggleText) toggleText.textContent = 'Ver toda la información';
+        }
+    }
+
+    function applyResponsiveState() {
+        if (isMobile()) {
+            toggleBtn.style.display = 'inline-flex';
+        } else {
+            toggleBtn.style.display = 'none';
+            details.classList.add('is-open');
+            toggleBtn.classList.add('is-open');
+        }
+    }
+
+    // Estado inicial
+    applyResponsiveState();
+
+    // Click toggle
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = details.classList.contains('is-open');
+        setOpen(!isOpen);
+    });
+
+    // Al redimensionar
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (isMobile()) {
+                toggleBtn.style.display = 'inline-flex';
+            } else {
+                toggleBtn.style.display = 'none';
+                details.classList.add('is-open');
+            }
+        }, 200);
+    });
 })();
